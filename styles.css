@@ -1,0 +1,32 @@
+.cards{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.middleDeck{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.middleDeck img{
+    position: absolute;
+}
+
+.cards img:hover{
+    cursor: pointer;
+}
+
+.counter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
