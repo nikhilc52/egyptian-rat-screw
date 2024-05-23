@@ -18,9 +18,9 @@ for (let suit of suits) {
 start(2);
 
 
-document.getElementById("frontCard").addEventListener("change", () => {
-    console.log('test');
-});
+// document.getElementById("frontCard").addEventListener("change", () => {
+//     console.log('test');
+// });
 
 
 function shuffle(array) {
