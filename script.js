@@ -3,6 +3,7 @@ const values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "
 
 let deck = [];
 let playerDecks = [];
+let burn = [];
 
 for (let suit of suits) {
     for (let value of values) {
@@ -15,6 +16,11 @@ for (let suit of suits) {
 }
 
 start(2);
+
+
+document.getElementById("frontCard").addEventListener("change", () => {
+    console.log('test');
+});
 
 
 function shuffle(array) {
@@ -68,56 +74,68 @@ function play(player) {
 
     document.getElementById("frontCard").src = "svg_playing_cards/fronts/" + frontCard + ".svg";
     document.getElementById("counter" + player).innerText = playerDecks[player - 1].length;
-    document.getElementById("deckCounter").innerText = deck.length;
+    document.getElementById("deckCounter").innerText = deck.length + burn.length;
 }
 
 function takeCards(player) {
     playerDecks[player - 1] = playerDecks[player - 1].concat(deck);
-    document.getElementById("frontCard").src = "";
+    playerDecks[player - 1] = playerDecks[player - 1].concat(burn);
+    document.getElementById("frontCard").src = "svg_playing_cards/playing_deck.svg";
     document.getElementById("middleCard").src = "";
     document.getElementById("backCard").src = "";
+    document.getElementById("burnedCard").src = "svg_playing_cards/burned_cards.svg";
+    burn = [];
     deck = [];
-    document.getElementById("deckCounter").innerText = deck.length;
+    document.getElementById("deckCounter").innerText = deck.length + burn.length;
     document.getElementById("counter" + player).innerText = playerDecks[player - 1].length;
     return;
 }
 
 function check() {
-    if (deck[deck.length - 1].value == 10) {
-        return true;
-    }
+    try {
+        if (deck[deck.length - 1].value == 10) {
+            return true;
+        }
 
-    //Check sum 10
-    if (parseInt(deck[deck.length - 1].value) + parseInt(deck[deck.length - 2].value) == 10) {
-        return true;
-    }
+        //Check sum 10
+        if (parseInt(deck[deck.length - 1].value) + parseInt(deck[deck.length - 2].value) == 10) {
+            return true;
+        }
 
-    //Check doubles
-    if (parseInt(deck[deck.length - 1].value) == parseInt(deck[deck.length - 2].value)) {
-        return true;
-    }
+        //Check doubles
+        if (parseInt(deck[deck.length - 1].value) == parseInt(deck[deck.length - 2].value)) {
+            return true;
+        }
 
-    //Check marriage
-    if (deck[deck.length - 1].value == 12 && deck[deck.length - 2].value == 13 ||
-        deck[deck.length - 1].value == 13 && deck[deck.length - 2].value == 12) {
-        return true;
-    }
+        //Check marriage
+        if (deck[deck.length - 1].value == 12 && deck[deck.length - 2].value == 13 ||
+            deck[deck.length - 1].value == 13 && deck[deck.length - 2].value == 12) {
+            return true;
+        }
 
-    //Check sandwich
-    if (deck[deck.length - 1].value == deck[deck.length - 3].value) {
-        return true;
+        //Check sandwich
+        if (deck[deck.length - 1].value == deck[deck.length - 3].value) {
+            return true;
+        }
+    }
+    catch (error) {
+        return false;
     }
 }
 
-function burn(player){
-    
+function burnCard(player) {
+    let burnedCard = playerDecks[player - 1][playerDecks[player - 1].length - 1].suit + "_" + playerDecks[player - 1][playerDecks[player - 1].length - 1].value;
+    burn.push(playerDecks[player - 1].pop());
+    document.getElementById("burnedCard").src = "svg_playing_cards/fronts/" + burnedCard + ".svg";
+    document.getElementById("deckCounter").innerText = deck.length + burn.length;
+    document.getElementById("counter" + player).innerText = playerDecks[player - 1].length;
 }
 
-// function hit(player) {
-//     if(check()){
-//         takeCards(player);
-//     }
-//     else{
-
-//     }
-// }
+function hit(player) {
+    if (check()) {
+        takeCards(player);
+    }
+    else {
+        burnCard(player);
+    }
+}
