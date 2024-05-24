@@ -124,7 +124,7 @@ function play(player) {
         //if the player was the user, then wait one second, check if the CPU should take the cards, and then play
         if (player == 1) {
             sleep(difficulty.value).then(() => {
-                if (check()) {
+                if (check(2) & deck.length > 2) { //> 2 is from a bug, call it 'dumbing the CPU down'
                     takeCards(2);
                     playerTurn = true; //doesn't fit spec, should ideally be removed/replaced with a better lock
                     play(2);
@@ -138,7 +138,7 @@ function play(player) {
         else if (player == 2) {
             playerTurn = true;
             sleep(difficulty.value).then(() => {
-                if (check()) {
+                if (check(2)) {
                     takeCards(2);
                     play(2);
                 }
@@ -174,32 +174,37 @@ function takeCards(player) {
 }
 
 //checks to see if there is a reason to take the deck
-function check() {
+function check(player) {
     //if there's every an error reading the values, then there wasn't a reason to take the cards
     try {
         //Check if 10
         if (deck[deck.length - 1].value == 10) {
+            document.getElementById("history").innerText = (player == 1) ? "You slapped a 10." : "CPU slapped a 10.";
             return true;
         }
 
         //Check sum 10
         if (parseInt(deck[deck.length - 1].value) + parseInt(deck[deck.length - 2].value) == 10) {
+            document.getElementById("history").innerText = (player == 1) ? "You slapped a sum of 10." : "CPU slapped a sum of 10.";
             return true;
         }
 
         //Check doubles
         if (parseInt(deck[deck.length - 1].value) == parseInt(deck[deck.length - 2].value)) {
+            document.getElementById("history").innerText = (player == 1) ? "You slapped a double." : "CPU slapped a double.";
             return true;
         }
 
         //Check marriage
         if (deck[deck.length - 1].value == 12 && deck[deck.length - 2].value == 13 ||
             deck[deck.length - 1].value == 13 && deck[deck.length - 2].value == 12) {
+                document.getElementById("history").innerText = (player == 1) ? "You slapped a marriage." : "CPU slapped a marriage.";
             return true;
         }
 
         //Check sandwich
         if (deck[deck.length - 1].value == deck[deck.length - 3].value) {
+            document.getElementById("history").innerText = (player == 1) ? "You slapped a sandwich." : "CPU slapped a sandwich.";
             return true;
         }
     }
@@ -227,10 +232,10 @@ function burnCard(player) {
 //hits for the player
 function hit(player) {
     //if there is a reason to hit, then take the cards
-    if (check()) {
+    if (check(player)) {
         takeCards(player);
     } //otherwise, if the deck has more than one card in it (to avoid second-place hits being regarded as burns), burn a card 
-    else if (!check() & deck.length > 1) {
+    else if (!check(player) & deck.length > 1) {
         burnCard(player);
     }
 }
