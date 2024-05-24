@@ -1,32 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Egyptian Rat Screw</title>
 </head>
+
 <body>
-    <!-- <div class="counter"><h1 id="faceCardCounter2"></h1></div> -->
-    <div class="counter"><h1 id="counter2"></h1></div>
+    <div class="counter">
+        <h1 id="turn2"></h1>
+    </div>
+    <div class="counter">
+        <h1 id="counter2"></h1>
+    </div>
     <div class="cards">
         <img src="svg_playing_cards/backs/red.svg" width="100px">
     </div>
 
     <div class="middleDeck">
-        <img src="svg_playing_cards/playing_deck.svg" id="frontCard" width="100px" onclick="hit('1')" style="position: absolute; z-index: 4;">
+        <img src="svg_playing_cards/playing_deck.svg" id="frontCard" width="100px" onclick="hit('1')"
+            style="position: absolute; z-index: 4;">
         <img src="" id="middleCard" width="100px" style="position: relative; left: 80px; z-index: 3;">
         <img src="" id="backCard" width="100px" style="position: relative; right: 50px; z-index: 2;">
-        <img src="svg_playing_cards/burned_cards.svg" id="burnedCard" width="100px" style="position: relative; right: 300px; z-index: 1;">
-        <div class="counter"><h1 id="deckCounter" style="position: relative; left:100px;"></h1></div>
+        <img src="svg_playing_cards/burned_cards.svg" id="burnedCard" width="100px"
+            style="position: relative; right: 300px; z-index: 1;">
+        <div class="counter">
+            <h1 id="deckCounter" style="position: relative; left:100px;"></h1>
+        </div>
     </div>
 
     <div class="cards">
         <img src="svg_playing_cards/backs/red.svg" width="100px" onclick="play('1')">
     </div>
 
-    <div class="counter"><h1 id="counter1"></h1></div>
-    <!-- <div class="counter"><h1 id="faceCardCounter1"></h1></div> -->
+    <div class="counter">
+        <h1 id="counter1"></h1>
+    </div>
+    <div class="counter">
+        <h1 id="turn1"></h1>
+    </div>
+
+    <h4 style="position: fixed; left: 0; top: 0; margin-left: 10px;">
+        <u>How to Play:</u>
+        <br>The bottom card set is yours.
+        <br>The top card set is the CPU's.
+        <br>Click on the playing deck to slap.
+        <br>Click on your deck to play.
+    </h4>
+
+    <h4 style="position: fixed; left: 0; bottom: 0; margin-left: 10px;">
+        <u>Rules:</u>
+        <br>Slap on 10s.
+        <br>Slap on two cards summing to 10.
+        <br>Slap on a King/Queen set.
+        <br>Slap on doubles.
+        <br>Slap on sandwiches.
+    </h4>
+
+    <div style="position: fixed; right: 0; top: 0; margin-top: 10px; width: 300px;">
+        <input type="range" min="100" max="2000" value="1000" class="slider" id="difficultySlider">
+        <h4 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Difficulty:</h4>
+        <h4 id="difficultyNumber" style="text-align: center; margin-top: 0px;">Normal</h4>
+    </div>
+
+    <h4 style="position: fixed; right: 0; bottom: 0; margin-right: 10px;">
+        Made by Nikhil Chinchalkar
+    </h4>
 </body>
 <script src="script.js"></script>
+
 </html>
