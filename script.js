@@ -96,7 +96,13 @@ function play(player) {
         //shuffle the player deck
         shuffle(playerDecks[player - 1]);
         //find the front of the deck
-        let frontCard = playerDecks[player - 1][playerDecks[player - 1].length - 1].suit + "_" + playerDecks[player - 1][playerDecks[player - 1].length - 1].value;
+        let frontCard = null;
+        try {
+            frontCard = playerDecks[player - 1][playerDecks[player - 1].length - 1].suit + "_" + playerDecks[player - 1][playerDecks[player - 1].length - 1].value;
+        } catch (error) {
+            checkGameOver();
+            return;
+        }
 
         //if statements to make sure that the deck appears properly with less than 3 elements
         if (deck.length == 1) {
@@ -171,6 +177,7 @@ function takeCards(player) {
     //update the counters
     document.getElementById("deckCounter").innerText = deck.length + burn.length;
     document.getElementById("counter" + player).innerText = playerDecks[player - 1].length;
+    checkGameOver();
 }
 
 //checks to see if there is a reason to take the deck
@@ -238,4 +245,10 @@ function hit(player) {
     else if (!check(player) & deck.length > 1) {
         burnCard(player);
     }
+    checkGameOver();
+}
+
+function checkGameOver(){
+    if(playerDecks[0].length == 0){document.getElementById("gameover").innerText = "Game Over. CPU Wins."};
+    if(playerDecks[1].length == 0){document.getElementById("gameover").innerText = "Game Over. You Win."};
 }
